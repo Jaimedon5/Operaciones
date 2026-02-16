@@ -7,22 +7,22 @@ import pandas as pd
 # -----------------------------------------------------------------------------
 st.set_page_config(layout="wide", page_title="Sistema de Planeación - Ing. Silva")
 
-# Definición de Colores Corporativos (Ajustados para brillo)
+# Definición de Colores Corporativos
 COLOR_PRIMARY = "#003366"    # Azul Estrategia
 COLOR_SECONDARY = "#00B050"  # Verde Recursos
 COLOR_TERTIARY = "#C00000"   # Rojo Costos
-COLOR_BG = "#0E1117"         # Fondo oscuro compatible con Streamlit Dark Mode
+COLOR_BG = "#0E1117"         # Fondo oscuro compatible con Streamlit
 
-# CSS para forzar textos claros en la interfaz
+# CSS para forzar textos claros y legibles
 st.markdown("""
     <style>
     h1 {
-        color: #4DA6FF !important; /* Azul claro para título */
+        color: #4DA6FF !important;
         border-bottom: 2px solid #4DA6FF;
         padding-bottom: 10px;
     }
     h2, h3, p, li {
-        color: #E0E0E0 !important; /* Texto casi blanco */
+        color: #E0E0E0 !important;
     }
     .author-box {
         background-color: #1E1E1E;
@@ -61,7 +61,7 @@ with col2:
 st.divider()
 
 # -----------------------------------------------------------------------------
-# 3. ESQUEMA RADIAL (SUNBURST DE ALTA VISIBILIDAD)
+# 3. ESQUEMA RADIAL (CORREGIDO: CENTRO OSCURO)
 # -----------------------------------------------------------------------------
 st.subheader("1. Esquema Jerárquico del Sistema (Interactivo)")
 st.info("💡 Haz clic en los sectores para hacer zoom. El esquema muestra la integración de los 3 pilares.")
@@ -70,9 +70,9 @@ st.info("💡 Haz clic en los sectores para hacer zoom. El esquema muestra la in
 labels = [
     "SISTEMA<br>INTEGRAL",                # Centro
     "ESTRATEGIA", "RECURSOS", "COSTOS",   # Nivel 1
-    "Plan<br>Agregada", "Estrat.<br>Operaciones", "Objetivos<br>Org.", # Nivel 2 (Estrategia)
-    "Capacidad<br>(CRP)", "Mano de<br>Obra", "Materiales<br>(MRP)",    # Nivel 2 (Recursos)
-    "Mantenimiento<br>(Holding)", "Producción<br>(COGS)", "Faltantes<br>(Riesgo)" # Nivel 2 (Costos)
+    "Plan<br>Agregada", "Estrat.<br>Operaciones", "Objetivos<br>Org.", # Nivel 2
+    "Capacidad<br>(CRP)", "Mano de<br>Obra", "Materiales<br>(MRP)",    # Nivel 2
+    "Mantenimiento<br>(Holding)", "Producción<br>(COGS)", "Faltantes<br>(Riesgo)" # Nivel 2
 ]
 
 parents = [
@@ -85,22 +85,22 @@ parents = [
 
 values = [9, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
-# Colores asignados manualmente para consistencia
+# --- CORRECCIÓN DE COLOR AQUÍ ---
+# Cambiamos el primer color (Centro) de gris claro a #2c3e50 (Gris Oscuro/Azulino)
 colors = [
-    "#F0F2F6",       # Centro (Blanco/Gris para contraste con letras oscuras o viceversa)
-    COLOR_PRIMARY, COLOR_SECONDARY, COLOR_TERTIARY, # Ramas principales
-    "#3498db", "#3498db", "#3498db", # Tonos azules
-    "#2ecc71", "#2ecc71", "#2ecc71", # Tonos verdes
-    "#e74c3c", "#e74c3c", "#e74c3c"  # Tonos rojos
+    "#2c3e50",       # <--- AHORA ES OSCURO PARA QUE SE LEA EL TEXTO BLANCO
+    COLOR_PRIMARY, COLOR_SECONDARY, COLOR_TERTIARY, 
+    "#3498db", "#3498db", "#3498db", 
+    "#2ecc71", "#2ecc71", "#2ecc71", 
+    "#e74c3c", "#e74c3c", "#e74c3c"
 ]
 
-# Textos descriptivos para el Hover (Ratón por encima)
 hovers = [
     "Visión Holística",
     "Alineación Top-Down", "Gestión de Entradas (4M)", "Control Financiero",
-    "Equilibrio Oferta/Demanda (6-18 meses)", "Ventaja Competitiva (Costo/Calidad)", "KPIs: ROI, Nivel de Servicio",
+    "Equilibrio Oferta/Demanda (6-18 meses)", "Ventaja Competitiva", "KPIs: ROI, Nivel de Servicio",
     "Restricciones y Cuellos de Botella", "Gestión del Talento Humano", "Gestión de Stock y BOM",
-    "Costo de oportunidad y obsolescencia", "Materia Prima y Mano de Obra Directa", "Riesgo de Stockout y Pérdida de Clientes"
+    "Costo de oportunidad y obsolescencia", "Materia Prima y Mano de Obra", "Riesgo de Stockout"
 ]
 
 fig_map = go.Figure(go.Sunburst(
@@ -111,21 +111,19 @@ fig_map = go.Figure(go.Sunburst(
     marker=dict(colors=colors),
     hovertext=hovers,
     hoverinfo="label+text",
-    insidetextorientation='auto', # Ajusta el texto para que quepa mejor
-    # AQUÍ ESTÁ LA CLAVE DE LA VISIBILIDAD:
+    insidetextorientation='auto', 
     textfont=dict(
-        family="Arial Black", # Fuente gruesa
-        size=18,              # Tamaño grande
-        color="white"         # Color blanco forzado
+        family="Arial Black",
+        size=18,
+        color="white" # Texto blanco
     )
 ))
 
-# Ajuste específico para el nodo central (Sistema) para que sea oscuro con letra blanca
 fig_map.update_layout(
     margin=dict(t=0, l=0, r=0, b=0),
     height=600,
-    paper_bgcolor='rgba(0,0,0,0)', # Fondo transparente
-    font=dict(color="white")       # Fuente global blanca
+    paper_bgcolor='rgba(0,0,0,0)',
+    font=dict(color="white")
 )
 
 st.plotly_chart(fig_map, use_container_width=True)
@@ -150,7 +148,6 @@ with tab1:
         </div>
         """, unsafe_allow_html=True)
     with col2:
-        # Funnel Chart
         fig_funnel = go.Figure(go.Funnel(
             y = ["Visión", "Estrategia", "Plan Agregado", "MPS"],
             x = [100, 80, 60, 40],
@@ -172,7 +169,6 @@ with tab2:
         </div>
         """, unsafe_allow_html=True)
     with col2:
-        # Bar Chart
         fig_res = go.Figure()
         fig_res.add_trace(go.Bar(x=['S1', 'S2', 'S3'], y=[850, 1200, 900], name='Carga', marker_color=COLOR_SECONDARY))
         fig_res.add_trace(go.Scatter(x=['S1', 'S2', 'S3'], y=[1000, 1000, 1000], name='Límite', line=dict(color='red', width=3, dash='dash')))
@@ -190,7 +186,6 @@ with tab3:
         </div>
         """, unsafe_allow_html=True)
     with col2:
-        # Pie Chart
         fig_cost = go.Figure(data=[go.Pie(labels=['Prod.', 'Holding', 'Faltantes'], values=[50, 30, 20], hole=.4)])
         fig_cost.update_layout(paper_bgcolor='rgba(0,0,0,0)', font=dict(color="white"), height=300)
         st.plotly_chart(fig_cost, use_container_width=True)
