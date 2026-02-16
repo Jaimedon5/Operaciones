@@ -1,37 +1,30 @@
 import streamlit as st
-import plotly.express as px
 import plotly.graph_objects as go
+import plotly.express as px
 import pandas as pd
 
 # -----------------------------------------------------------------------------
-# CONFIGURACIÓN DE PÁGINA Y ESTILO
+# 1. CONFIGURACIÓN DE PÁGINA (Debe ser lo primero)
 # -----------------------------------------------------------------------------
 st.set_page_config(layout="wide", page_title="Sistema de Planeación - Ing. Silva")
 
-# Definición de Colores Corporativos
-COLOR_PRIMARY = "#003366"  # Azul Estrategia
-COLOR_SECONDARY = "#00B050" # Verde Recursos
-COLOR_TERTIARY = "#C00000"  # Rojo Costos
-COLOR_BG = "#F0F2F6"
+# Definición de Colores de Alto Contraste
+COLOR_PRIMARY = "#003366"    # Azul Oscuro
+COLOR_SECONDARY = "#00B050"  # Verde Intenso
+COLOR_TERTIARY = "#C00000"   # Rojo Intenso
 
-# CSS Personalizado para dar formato académico
+# CSS Ajustado: Eliminamos el background fijo para evitar conflictos con Modo Oscuro
 st.markdown(f"""
     <style>
-    .main {{
-        background-color: {COLOR_BG};
-    }}
     h1 {{
         color: {COLOR_PRIMARY};
         font-family: 'Helvetica Neue', sans-serif;
         border-bottom: 2px solid {COLOR_PRIMARY};
         padding-bottom: 10px;
     }}
-    h2, h3 {{
-        color: #333;
-    }}
     .author-tag {{
         font-size: 1.2rem;
-        color: #555;
+        color: #888;
         font-weight: bold;
         text-align: right;
     }}
@@ -44,7 +37,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# ENCABEZADO ACADÉMICO
+# 2. ENCABEZADO
 # -----------------------------------------------------------------------------
 col_header_1, col_header_2 = st.columns([3, 1])
 with col_header_1:
@@ -59,117 +52,131 @@ with col_header_2:
 st.divider()
 
 # -----------------------------------------------------------------------------
-# 1. MAPA CONCEPTUAL INTERACTIVO (SUNBURST - SIN GRAPHVIZ)
+# 3. MAPA CONCEPTUAL (CORREGIDO - Graph Objects)
 # -----------------------------------------------------------------------------
 st.subheader("1. Mapa Conceptual Jerárquico del Sistema")
-st.info("💡 Instrucción: Haz clic en los sectores del gráfico para 'entrar' y ver los detalles de cada rama. Haz clic en el centro para volver a salir.")
+st.info("💡 Instrucción: Haz clic en los sectores del gráfico para 'entrar'. Haz clic en el centro para regresar.")
 
-# Datos Estructurados para el Gráfico
-df_map = pd.DataFrame({
-    'id': ['Sistema', 'Estratégico', 'Recursos', 'Costos', 
-           'Plan Agregada', 'Estrat. Operaciones', 'Objetivos Org.',
-           'Capacidad (OEE)', 'Mano de Obra', 'Materiales (BOM)',
-           'Mantenimiento (H)', 'Producción (COGS)', 'Faltantes'],
-    'parent': ['', 'Sistema', 'Sistema', 'Sistema', 
-               'Estratégico', 'Estratégico', 'Estratégico',
-               'Recursos', 'Recursos', 'Recursos',
-               'Costos', 'Costos', 'Costos'],
-    'valor': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    'desc': ['Visión Integral', 'Nivel Táctico', 'Factores 4M', 'Control Financiero',
-             '6-18 Meses', 'Ventaja Competitiva', 'KPIs',
-             'Restricciones', 'Talento Humano', 'MRP',
-             'Obsolescencia', 'Materia Prima', 'Riesgo Stockout']
-})
+# Definición manual de la jerarquía para asegurar que no falle el renderizado
+# Estructura: Raíz -> 3 Ramas -> 3 Hojas cada una
+labels = [
+    "SISTEMA INTEGRAL",                # Raíz
+    "ESTRATEGIA", "RECURSOS", "COSTOS", # Nivel 1
+    "Plan Agregada", "Estrat. Operaciones", "Objetivos Org.", # Hojas de Estrategia
+    "Capacidad (CRP)", "Mano de Obra", "Materiales (MRP)",    # Hojas de Recursos
+    "Mantenimiento (H)", "Producción", "Faltantes (Riesgo)"   # Hojas de Costos
+]
 
-# Creación del Gráfico Sunburst
-fig_map = px.sunburst(
-    df_map, ids='id', parents='parent', values='valor',
-    color='id', 
-    color_discrete_map={
-        'Sistema': '#2c3e50', 'Estratégico': COLOR_PRIMARY, 'Recursos': COLOR_SECONDARY, 'Costos': COLOR_TERTIARY,
-        'Plan Agregada': '#2980b9', 'Capacidad (OEE)': '#27ae60', 'Mantenimiento (H)': '#c0392b'
-    },
-    hover_data=['desc']
+parents = [
+    "",                                # Raíz no tiene padre
+    "SISTEMA INTEGRAL", "SISTEMA INTEGRAL", "SISTEMA INTEGRAL", # Padres Nivel 1
+    "ESTRATEGIA", "ESTRATEGIA", "ESTRATEGIA",
+    "RECURSOS", "RECURSOS", "RECURSOS",
+    "COSTOS", "COSTOS", "COSTOS"
+]
+
+# Valores matemáticamente consistentes (Hojas=1, Ramas=3, Raíz=9)
+values = [
+    9,          # Raíz (3+3+3)
+    3, 3, 3,    # Ramas
+    1, 1, 1,    # Hojas Estrategia
+    1, 1, 1,    # Hojas Recursos
+    1, 1, 1     # Hojas Costos
+]
+
+colors = [
+    "#2c3e50",  # Raíz (Gris oscuro)
+    COLOR_PRIMARY, COLOR_SECONDARY, COLOR_TERTIARY, # Ramas
+    "#3498db", "#3498db", "#3498db", # Azules claros
+    "#2ecc71", "#2ecc71", "#2ecc71", # Verdes claros
+    "#e74c3c", "#e74c3c", "#e74c3c"  # Rojos claros
+]
+
+# Creación del Gráfico Robusto
+fig_map = go.Figure(go.Sunburst(
+    labels=labels,
+    parents=parents,
+    values=values,
+    branchvalues="total", # Fuerza a que la matemática sea exacta
+    marker=dict(colors=colors),
+    hovertemplate='<b>%{label}</b><br>Peso en el sistema: %{value}<extra></extra>',
+    insidetextorientation='radial'
+))
+
+fig_map.update_layout(
+    margin=dict(t=0, l=0, r=0, b=0),
+    height=600,
+    paper_bgcolor='rgba(0,0,0,0)' # Fondo transparente para que funcione en Dark Mode
 )
-fig_map.update_layout(margin=dict(t=0, l=0, r=0, b=0), height=600)
 
 st.plotly_chart(fig_map, use_container_width=True)
 
 st.divider()
 
 # -----------------------------------------------------------------------------
-# 2. ANÁLISIS VISUAL Y TEÓRICO (TABS)
+# 4. ANÁLISIS VISUAL (TABS)
 # -----------------------------------------------------------------------------
 st.subheader("2. Desglose Analítico y Visualización de Datos")
-st.markdown("Análisis profundo de los tres pilares fundamentales, sustentado en teoría de operaciones.")
 
 tab1, tab2, tab3 = st.tabs(["🟦 I. Elementos Estratégicos", "🟩 II. Gestión de Recursos", "🟥 III. Costos y Gastos"])
 
 # --- TAB 1: ESTRATEGIA ---
 with tab1:
-    col1, col2 = st.columns([1, 1])
-    with col1:
+    c1, c2 = st.columns([1, 1])
+    with c1:
         st.markdown("### Alineación Estratégica (Top-Down)")
         st.markdown("""
         <div class="big-font">
-        La planeación de la producción no es un evento aislado, sino la traducción operativa de la visión empresarial.
-        Según <b>Heizer y Render (2020)</b>, la estrategia de operaciones debe alinearse con la misión para generar una ventaja competitiva sostenible.
+        La estrategia desciende desde la alta dirección hasta el piso de producción.
+        <b>Heizer y Render (2020)</b> establecen que sin una alineación clara, la eficiencia operativa carece de rumbo.
         </div>
         """, unsafe_allow_html=True)
-    with col2:
-        fig_strat = go.Figure(go.Funnel(
-            y = ["Visión Corporativa", "Estrategia Operaciones", "Planeación Agregada", "Programa Maestro (MPS)"],
+    with c2:
+        fig_funnel = go.Figure(go.Funnel(
+            y = ["1. Visión Corporativa", "2. Estrategia Ops.", "3. Plan Agregado", "4. Plan Maestro (MPS)"],
             x = [100, 80, 60, 40],
             textinfo = "value+percent initial",
-            marker = {"color": [COLOR_PRIMARY, "#1a5276", "#2980b9", "#5499c7"]}
+            marker = {"color": [COLOR_PRIMARY, "#154360", "#1A5276", "#2980B9"]}
         ))
-        fig_strat.update_layout(title="Jerarquía de la Planeación (Despliegue)", showlegend=False, height=300)
-        st.plotly_chart(fig_strat, use_container_width=True)
+        fig_funnel.update_layout(title="Embudo de Decisión", showlegend=False, height=300)
+        st.plotly_chart(fig_funnel, use_container_width=True)
 
 # --- TAB 2: RECURSOS ---
 with tab2:
-    col1, col2 = st.columns([1, 1])
-    with col1:
-        st.markdown("### Gestión de la Capacidad y Materiales")
+    c1, c2 = st.columns([1, 1])
+    with c1:
+        st.markdown("### Balance de Capacidad (CRP)")
         st.markdown("""
         <div class="big-font">
-        La gestión de recursos busca asegurar la disponibilidad de los factores de producción (4M).
-        <b>Chase y Jacobs (2018)</b> enfatizan que la planeación debe considerar la eficiencia (OEE) y no solo la capacidad teórica.
+        La gestión de recursos valida la viabilidad del plan.
+        El gráfico muestra un <b>Cuello de Botella en la Semana 3</b>, donde la demanda supera la capacidad instalada.
         </div>
         """, unsafe_allow_html=True)
-    with col2:
+    with c2:
         fig_res = go.Figure()
-        fig_res.add_trace(go.Bar(x=['Sem 1', 'Sem 2', 'Sem 3'], y=[850, 1150, 950], name='Carga', marker_color=COLOR_SECONDARY))
-        fig_res.add_trace(go.Scatter(x=['Sem 1', 'Sem 2', 'Sem 3'], y=[1000, 1000, 1000], name='Capacidad Max', line=dict(color='red', width=3, dash='dash')))
-        fig_res.update_layout(title="Análisis CRP (Carga vs Capacidad)", height=300)
+        fig_res.add_trace(go.Bar(x=['S1', 'S2', 'S3', 'S4'], y=[850, 950, 1150, 900], name='Carga', marker_color=COLOR_SECONDARY))
+        fig_res.add_trace(go.Scatter(x=['S1', 'S2', 'S3', 'S4'], y=[1000, 1000, 1000, 1000], name='Capacidad Max', line=dict(color='red', width=3, dash='dash')))
+        fig_res.update_layout(title="Análisis Carga vs Capacidad", height=300)
         st.plotly_chart(fig_res, use_container_width=True)
 
 # --- TAB 3: COSTOS ---
 with tab3:
-    col1, col2 = st.columns([1, 1])
-    with col1:
-        st.markdown("### Estructura de Costos y Optimización")
+    c1, c2 = st.columns([1, 1])
+    with c1:
+        st.markdown("### El Iceberg de los Costos")
         st.markdown("""
         <div class="big-font">
-        El objetivo final es minimizar el Costo Total Relevante. Existe un <i>Trade-off</i> constante entre nivel de servicio e inventario (Stockout vs Holding Cost).
+        El costo visible (Producción) es solo una parte. Los costos ocultos como el <b>Mantenimiento de Inventario (H)</b> y los Faltantes impactan gravemente la utilidad.
         </div>
         """, unsafe_allow_html=True)
-    with col2:
-        fig_cost = go.Figure(data=[go.Pie(labels=['Materiales', 'Mano de Obra', 'Holding (H)', 'Faltantes'], values=[45, 25, 20, 10], hole=.4)])
-        fig_cost.update_layout(title="Distribución del Costo Logístico", height=300)
-        st.plotly_chart(fig_cost, use_container_width=True)
-
-st.divider()
-
-# -----------------------------------------------------------------------------
-# REFERENCIAS BIBLIOGRÁFICAS (APA 7.0)
-# -----------------------------------------------------------------------------
-with st.expander("📚 Referencias Bibliográficas (Formato APA 7.0)", expanded=True):
-    st.markdown("""
-    * Chase, R. B., & Jacobs, F. R. (2018). *Administración de operaciones: Producción y cadena de suministros* (15.ª ed.). McGraw-Hill Education.
-    * Chopra, S., & Meindl, P. (2016). *Administración de la cadena de suministro: Estrategia, planeación y operación* (6.ª ed.). Pearson Educación.
-    * Heizer, J., Render, B., & Munson, C. (2020). *Principios de administración de operaciones* (13.ª ed.). Pearson.
-    """)
+    with c2:
+        fig_pie = go.Figure(data=[go.Pie(labels=['Producción', 'Holding (H)', 'Faltantes', 'Admin'], values=[50, 25, 15, 10], hole=.4)])
+        fig_pie.update_layout(title="Estructura de Costos Logísticos", height=300)
+        st.plotly_chart(fig_pie, use_container_width=True)
 
 st.markdown("---")
-st.markdown("*Generado para la asignatura de Planeación y Control de la Producción | Maestría en Ingeniería*")
+with st.expander("📚 Referencias Bibliográficas"):
+    st.markdown("""
+    * Chase, R. B., & Jacobs, F. R. (2018). *Administración de operaciones*. McGraw-Hill.
+    * Heizer, J., & Render, B. (2020). *Principios de administración de operaciones*. Pearson.
+    """)
