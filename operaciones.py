@@ -136,45 +136,59 @@ section = st.sidebar.radio(
 )
 
 if section == "Portada":
-    st.markdown("<h2 style='text-align: center; color: var(--gold); font-size: 1.8rem; margin-bottom: 30px;'>UNIVERSIDAD UO GLOBAL</h2>", unsafe_allow_html=True)
-    st.markdown("<h3 style='text-align: center; color: var(--text); font-size: 1.3rem; margin-bottom: 5px;'>Maestria en Ingenieria Industrial</h3>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: var(--muted); font-size: 1.05rem; margin-bottom: 30px;'>Administracion de la Produccion y las Operaciones</p>", unsafe_allow_html=True)
+    st.markdown("<br>" * 3, unsafe_allow_html=True)
     
+    st.markdown("<h2 style='text-align: center; color: var(--gold); font-size: 1.8rem;'>UNIVERSIDAD UO GLOBAL</h2>", unsafe_allow_html=True)
+    
+    st.markdown("<h3 style='text-align: center; color: var(--text); font-size: 1.3rem; margin-top: 20px;'>Maestria en Ingenieria Industrial</h3>", unsafe_allow_html=True)
+    
+    st.markdown("<p style='text-align: center; color: var(--muted); font-size: 1.05rem;'>Administracion de la Produccion y las Operaciones</p>", unsafe_allow_html=True)
+    
+    st.markdown("<br>" * 2, unsafe_allow_html=True)
     st.divider()
+    st.markdown("<br>" * 2, unsafe_allow_html=True)
     
-    st.markdown("<h1 style='text-align: center; color: var(--accent); font-size: 2rem; margin-bottom: 10px;'>PROYECTO INTEGRADOR</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: var(--text); font-size: 1.1rem; margin-bottom: 40px;'>Sistema Integral de Planeacion de la Produccion</p>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: var(--accent); font-size: 2.2rem;'>PROYECTO INTEGRADOR</h1>", unsafe_allow_html=True)
     
+    st.markdown("<p style='text-align: center; color: var(--text); font-size: 1.1rem; margin-top: 20px;'>Sistema Integral de Planeacion de la Produccion</p>", unsafe_allow_html=True)
+    
+    st.markdown("<br>" * 2, unsafe_allow_html=True)
     st.divider()
+    st.markdown("<br>" * 3, unsafe_allow_html=True)
     
     col1, col2 = st.columns([1, 1])
+    
     with col1:
-        st.markdown("<p style='color: var(--text); font-size: 1rem; margin-bottom: 15px;'><b>Docente:</b></p>", unsafe_allow_html=True)
-        st.markdown("<p style='color: var(--gold); font-size: 1.05rem; margin-bottom: 30px;'>Dra. Diana Faviola Olea Flores</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: var(--text); font-size: 1rem; font-weight: bold;'>Docente:</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: var(--gold); font-size: 1.1rem; margin-top: -10px;'>Dra. Diana Faviola Olea Flores</p>", unsafe_allow_html=True)
     
     with col2:
-        st.markdown("<p style='color: var(--text); font-size: 1rem; margin-bottom: 15px;'><b>Autor:</b></p>", unsafe_allow_html=True)
-        st.markdown("<p style='color: var(--gold); font-size: 1.05rem; margin-bottom: 10px;'>Ing. Jaime Silva Betancourt</p>", unsafe_allow_html=True)
-        st.markdown("<p style='color: var(--muted); font-size: 0.95rem; margin-bottom: 30px;'>Matricula: 42500289</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: var(--text); font-size: 1rem; font-weight: bold;'>Autor:</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: var(--gold); font-size: 1.1rem; margin-top: -10px;'>Ing. Jaime Silva Betancourt</p>", unsafe_allow_html=True)
     
+    st.markdown("<p style='text-align: center; color: var(--muted); font-size: 0.95rem; margin-top: 20px;'>Matricula: 42500289</p>", unsafe_allow_html=True)
+    
+    st.markdown("<br>" * 3, unsafe_allow_html=True)
     st.divider()
+    st.markdown("<br>" * 2, unsafe_allow_html=True)
     
-    st.markdown("<p style='text-align: center; color: var(--text); font-size: 0.95rem; margin-top: 50px;'><b>Fecha de Entrega:</b></p>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: var(--accent); font-size: 1rem; margin-bottom: 50px;'>22 de febrero de 2026</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: var(--text); font-size: 1rem; font-weight: bold;'>Fecha de Entrega:</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: var(--accent); font-size: 1.1rem; margin-top: -10px;'>22 de febrero de 2026</p>", unsafe_allow_html=True)
     
+    st.markdown("<br>" * 4, unsafe_allow_html=True)
     st.divider()
     
     st.subheader("Resumen Formal del Contenido")
     st.markdown("""
-    Este proyecto integrador presenta un análisis exhaustivo del Sistema Integral de Planeación de la Producción, abordando desde 
-    sus fundamentos históricos hasta la aplicación contemporánea de técnicas modernas de planeación, programación y control.
+    Este proyecto integrador presenta un analisis exhaustivo del Sistema Integral de Planeacion de la Produccion, abordando desde 
+    sus fundamentos historicos hasta la aplicacion contemporanea de tecnicas modernas de planeacion, programacion y control.
     
-    El contenido está estructurado de manera progresiva:
+    El contenido esta estructurado de manera progresiva:
     
-    * **Semana 1:** Línea de tiempo que contextualiza la evolución histórica de la administración de operaciones desde 1750 hasta la actualidad.
-    * **Semana 2:** Inventarios y modelos de optimización (EOQ, Safety Stock, Cycle Stock).
-    * **Semana 3:** Desarrollo integral del Sistema: componentes estratégicos, gestión de recursos y estructura de costos, con análisis visual y cuantitativo.
-    * **Semana 4:** Plan Maestro de Producción (PMP) y Material Requirements Planning (MRP) con ejercicios prácticos y resolución de casos.
+    * **Semana 1:** Linea de tiempo que contextualiza la evolucion historica de la administracion de operaciones desde 1750 hasta la actualidad.
+    * **Semana 2:** Inventarios y modelos de optimizacion (EOQ, Safety Stock, Cycle Stock).
+    * **Semana 3:** Desarrollo integral del Sistema: componentes estrategicos, gestion de recursos y estructura de costos, con analisis visual y cuantitativo.
+    * **Semana 4:** Plan Maestro de Produccion (PMP) y Material Requirements Planning (MRP) con ejercicios practicos y resolucion de casos.
     """)
 
 elif section == "Semana 1":
