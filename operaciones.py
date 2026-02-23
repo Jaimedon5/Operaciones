@@ -251,11 +251,18 @@ elif section == "Semana 2":
     - Determinación de puntos de reorden considerando lead time y variabilidad
     - Evaluación de políticas de inventario para múltiples artículos con restricciones presupuestarias
     
-    **Corrección de Errores Identificados en Retroalimentaciones Anteriores:**
-    
-    Los estudiantes que cometieron errores conceptuales en la comprensión de la demanda independiente versus dependiente 
-    deberán revisar la diferencia entre gestión de MTS (Make-to-Stock) versus MTO (Make-to-Order).
     """)
+
+    st.markdown("**Hoja de Calculo (Semana 2):**")
+    st.markdown(
+        "Ventana del archivo de Google Sheets. Si no se visualiza, publique el archivo en la web "
+        "y asegure que el acceso sea publico o de solo lectura."
+    )
+    components.iframe(
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvefPNfnp8Y56UVEecJeV40nUJ-LGiOlC8gDV0LCGbdKgpSczkL91ydALExQqxLa9vGpwppINL5LdH/pubhtml",
+        height=700,
+        scrolling=True,
+    )
     
     st.divider()
     st.subheader("Conclusión y Reflexión del Aprendizaje")
