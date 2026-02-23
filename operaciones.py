@@ -13,38 +13,93 @@ st.set_page_config(layout="wide", page_title="Sistema de Planeación - Ing. Silv
 COLOR_PRIMARY = "#003366"  # Azul Estrategia
 COLOR_SECONDARY = "#00B050" # Verde Recursos
 COLOR_TERTIARY = "#C00000"  # Rojo Costos
-COLOR_BG = "#F0F2F6"
+COLOR_BG = "#0b1220"
 
 # CSS Personalizado para dar formato académico
 st.markdown(f"""
     <style>
-    .main {{
-        background-color: {COLOR_BG};
+    :root {{
+        --bg: {COLOR_BG};
+        --panel: #111827;
+        --panel-2: #0f172a;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --accent: {COLOR_PRIMARY};
+        --gold: #c9a65d;
+        --border: rgba(201, 166, 93, 0.6);
     }}
+
+    html, body, [data-testid="stAppViewContainer"] {{
+        background: radial-gradient(1200px 600px at 15% 0%, #0f172a, #0b1220 60%) !important;
+        color: var(--text) !important;
+        font-family: 'Arial', sans-serif;
+    }}
+
+    .main, .block-container {{
+        background-color: transparent !important;
+    }}
+
+    h1, h2, h3, h4, h5 {{
+        color: var(--text) !important;
+        font-family: 'Arial Black', 'Arial', sans-serif;
+        letter-spacing: 0.3px;
+    }}
+
     h1 {{
-        color: {COLOR_PRIMARY};
-        font-family: 'Helvetica Neue', sans-serif;
-        border-bottom: 2px solid {COLOR_PRIMARY};
+        border-bottom: 2px solid var(--accent);
         padding-bottom: 10px;
     }}
-    h2, h3 {{
-        color: #333;
+
+    p, li, span, label {{
+        color: var(--text) !important;
     }}
+
     .author-tag {{
-        font-size: 1.2rem;
-        color: #555;
+        font-size: 1.1rem;
+        color: var(--muted);
         font-weight: bold;
         text-align: right;
     }}
+
     .citation {{
         font-size: 0.8rem;
-        color: #666;
+        color: var(--muted);
         font-style: italic;
     }}
+
     .big-font {{
-        font-size: 1.1rem;
-        line-height: 1.6;
+        font-size: 1.05rem;
+        line-height: 1.7;
         text-align: justify;
+        color: var(--text);
+    }}
+
+    .stMarkdown, .stCaption {{
+        color: var(--text) !important;
+    }}
+
+    [data-testid="stMetric"] {{
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 10px 12px;
+    }}
+
+    [data-testid="stExpander"] {{
+        background: var(--panel-2);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+    }}
+
+    .stPlotlyChart {{
+        background: var(--panel-2);
+        border-radius: 14px;
+        padding: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }}
+
+    hr, .stDivider {{
+        border-color: rgba(255, 255, 255, 0.12) !important;
     }}
     </style>
 """, unsafe_allow_html=True)
