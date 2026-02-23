@@ -54,33 +54,33 @@ st.markdown(f"""
         color: var(--text) !important;
     }}
 
-    .author-card {
+    .author-card {{
         background: linear-gradient(180deg, #0f1b33 0%, #0b1528 100%);
         border: 1px solid var(--border);
         border-radius: 12px;
         padding: 12px 14px;
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-    }
+    }}
 
-    .author-tag {
+    .author-tag {{
         font-size: 1.05rem;
         color: var(--gold);
         font-weight: bold;
         text-align: right;
         letter-spacing: 0.2px;
-    }
+    }}
 
-    .author-subtitle {
+    .author-subtitle {{
         color: #9cc5ff;
         font-size: 0.95rem;
         text-align: right;
         margin-top: 6px;
-    }
+    }}
 
-    .subtitle-accent {
+    .subtitle-accent {{
         color: #9cc5ff;
         font-weight: 600;
-    }
+    }}
 
     .citation {{
         font-size: 0.8rem;
