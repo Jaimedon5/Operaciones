@@ -306,6 +306,21 @@ elif section == "Semana 3":
     - Incluye palabras clave o breves descripciones que expliquen la funcion de cada elemento dentro del sistema.
     """)
 
+    st.markdown("**Hoja de Calculo (MPS - Semana 3):**")
+    st.markdown(
+        "Liga del archivo editable: "
+        "https://docs.google.com/spreadsheets/d/1kHWG78i48QyYPmPU9v-0kOSGTHMTFRi-KWRVQucJ-lk/edit?gid=89536769#gid=89536769"
+    )
+    st.markdown(
+        "Ventana del archivo de Google Sheets con ejercicios de MPS. Si no se visualiza, "
+        "verifique que el archivo este publicado en la web."
+    )
+    components.iframe(
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvefPNfnp8Y56UVEecJeV40nUJ-LGiOlC8gDV0LCGbdKgpSczkL91ydALExQqxLa9vGpwppINL5LdH/pubhtml",
+        height=700,
+        scrolling=True,
+    )
+
     st.subheader("1. Mapa Conceptual Jerarquico del Sistema")
     st.markdown("""
     Este diagrama interactivo presenta la jerarquia del sistema en formato tipo pastel.
@@ -516,6 +531,25 @@ elif section == "Semana 4":
     - Entrada: Estructura del producto (BOM), lead times, inventarios disponibles, PMP
     - Proceso: Desagregación de demanda independiente en demanda dependiente
     - Salida: Programas de compra / producción para cada componente
+
+    """)
+
+    st.markdown("**Hoja de Calculo (MRP - Semana 4):**")
+    st.markdown(
+        "Liga del archivo editable: "
+        "https://docs.google.com/spreadsheets/d/1kHWG78i48QyYPmPU9v-0kOSGTHMTFRi-KWRVQucJ-lk/edit?gid=89536769#gid=89536769"
+    )
+    st.markdown(
+        "Ventana del archivo de Google Sheets con ejercicios de MRP. Si no se visualiza, "
+        "verifique que el archivo este publicado en la web."
+    )
+    components.iframe(
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRvefPNfnp8Y56UVEecJeV40nUJ-LGiOlC8gDV0LCGbdKgpSczkL91ydALExQqxLa9vGpwppINL5LdH/pubhtml",
+        height=700,
+        scrolling=True,
+    )
+
+    st.markdown("""
     
     **Ejercicios Realizados en Clase:**
     
