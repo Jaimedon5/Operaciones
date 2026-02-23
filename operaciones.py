@@ -255,6 +255,10 @@ elif section == "Semana 2":
 
     st.markdown("**Hoja de Calculo (Semana 2):**")
     st.markdown(
+        "Liga del archivo editable: "
+        "https://docs.google.com/spreadsheets/d/1kHWG78i48QyYPmPU9v-0kOSGTHMTFRi-KWRVQucJ-lk/edit?gid=89536769#gid=89536769"
+    )
+    st.markdown(
         "Ventana del archivo de Google Sheets. Si no se visualiza, publique el archivo en la web "
         "y asegure que el acceso sea publico o de solo lectura."
     )
