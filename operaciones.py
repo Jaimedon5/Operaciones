@@ -136,34 +136,31 @@ section = st.sidebar.radio(
 )
 
 if section == "Portada":
-    st.markdown("""
-    <div style="text-align: center; padding: 40px 20px;">
-        <h2 style="color: var(--gold); font-size: 1.8rem; margin-bottom: 30px;">UNIVERSIDAD UO GLOBAL</h2>
-        <h3 style="color: var(--text); font-size: 1.3rem; margin-bottom: 5px;">Maestría en Ingeniería Industrial</h3>
-        <p style="color: var(--muted); font-size: 1.05rem; margin-bottom: 30px;">Administración de la Producción y las Operaciones</p>
-        
-        <hr style="border: 1px solid var(--border); margin: 40px 0;">
-        
-        <h1 style="color: var(--accent); font-size: 2rem; margin-bottom: 10px;">PROYECTO INTEGRADOR</h1>
-        <p style="color: var(--text); font-size: 1.1rem; margin-bottom: 40px;">Sistema Integral de Planeación de la Producción</p>
-        
-        <hr style="border: 1px solid var(--border); margin: 40px 0;">
-        
-        <div style="margin: 50px 0;">
-            <p style="color: var(--text); font-size: 1rem; margin-bottom: 15px;"><b>Docente:</b></p>
-            <p style="color: var(--gold); font-size: 1.05rem; margin-bottom: 30px;">Dra. Diana Faviola Olea Flores</p>
-            
-            <p style="color: var(--text); font-size: 1rem; margin-bottom: 15px;"><b>Autor:</b></p>
-            <p style="color: var(--gold); font-size: 1.05rem; margin-bottom: 10px;">Ing. Jaime Silva Betancourt</p>
-            <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 30px;">Matrícula: 42500289</p>
-        </div>
-        
-        <hr style="border: 1px solid var(--border); margin: 40px 0;">
-        
-        <p style="color: var(--text); font-size: 0.95rem; margin-top: 50px;"><b>Fecha de Entrega:</b></p>
-        <p style="color: var(--accent); font-size: 1rem; margin-bottom: 50px;">22 de febrero de 2026</p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center; color: var(--gold); font-size: 1.8rem; margin-bottom: 30px;'>UNIVERSIDAD UO GLOBAL</h2>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center; color: var(--text); font-size: 1.3rem; margin-bottom: 5px;'>Maestria en Ingenieria Industrial</h3>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: var(--muted); font-size: 1.05rem; margin-bottom: 30px;'>Administracion de la Produccion y las Operaciones</p>", unsafe_allow_html=True)
+    
+    st.divider()
+    
+    st.markdown("<h1 style='text-align: center; color: var(--accent); font-size: 2rem; margin-bottom: 10px;'>PROYECTO INTEGRADOR</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: var(--text); font-size: 1.1rem; margin-bottom: 40px;'>Sistema Integral de Planeacion de la Produccion</p>", unsafe_allow_html=True)
+    
+    st.divider()
+    
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        st.markdown("<p style='color: var(--text); font-size: 1rem; margin-bottom: 15px;'><b>Docente:</b></p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: var(--gold); font-size: 1.05rem; margin-bottom: 30px;'>Dra. Diana Faviola Olea Flores</p>", unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("<p style='color: var(--text); font-size: 1rem; margin-bottom: 15px;'><b>Autor:</b></p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: var(--gold); font-size: 1.05rem; margin-bottom: 10px;'>Ing. Jaime Silva Betancourt</p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: var(--muted); font-size: 0.95rem; margin-bottom: 30px;'>Matricula: 42500289</p>", unsafe_allow_html=True)
+    
+    st.divider()
+    
+    st.markdown("<p style='text-align: center; color: var(--text); font-size: 0.95rem; margin-top: 50px;'><b>Fecha de Entrega:</b></p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: var(--accent); font-size: 1rem; margin-bottom: 50px;'>22 de febrero de 2026</p>", unsafe_allow_html=True)
     
     st.divider()
     
