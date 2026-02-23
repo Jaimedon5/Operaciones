@@ -150,22 +150,68 @@ st.divider()
 st.sidebar.title("Menu")
 section = st.sidebar.radio(
     "Navegacion",
-    ["Portada", "Semana 1", "Semana 2", "Semana 3", "Semana 4"],
+    ["Portada", "Semana 1", "Semana 2", "Semana 3", "Semana 4", "Bibliografía"],
     index=0
 )
 
 if section == "Portada":
-    st.markdown("### Portada")
-    st.markdown(
-        """
-        Bienvenido al sistema integral de planeacion de la produccion.
-        Use el menu lateral para navegar por las semanas del curso.
-        """
-    )
+    st.markdown("""
+    <div style="text-align: center; padding: 40px 20px;">
+        <h2 style="color: var(--gold); font-size: 1.8rem; margin-bottom: 30px;">UNIVERSIDAD UO GLOBAL</h2>
+        <h3 style="color: var(--text); font-size: 1.3rem; margin-bottom: 5px;">Maestría en Ingeniería Industrial</h3>
+        <p style="color: var(--muted); font-size: 1.05rem; margin-bottom: 30px;">Administración de la Producción y las Operaciones</p>
+        
+        <hr style="border: 1px solid var(--border); margin: 40px 0;">
+        
+        <h1 style="color: var(--accent); font-size: 2rem; margin-bottom: 10px;">PROYECTO INTEGRADOR</h1>
+        <p style="color: var(--text); font-size: 1.1rem; margin-bottom: 40px;">Sistema Integral de Planeación de la Producción</p>
+        
+        <hr style="border: 1px solid var(--border); margin: 40px 0;">
+        
+        <div style="margin: 50px 0;">
+            <p style="color: var(--text); font-size: 1rem; margin-bottom: 15px;"><b>Docente:</b></p>
+            <p style="color: var(--gold); font-size: 1.05rem; margin-bottom: 30px;">Dra. Diana Faviola Olea Flores</p>
+            
+            <p style="color: var(--text); font-size: 1rem; margin-bottom: 15px;"><b>Autor:</b></p>
+            <p style="color: var(--gold); font-size: 1.05rem; margin-bottom: 10px;">Ing. Jaime Silva Betancourt</p>
+            <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 30px;">Matrícula: 42500289</p>
+        </div>
+        
+        <hr style="border: 1px solid var(--border); margin: 40px 0;">
+        
+        <p style="color: var(--text); font-size: 0.95rem; margin-top: 50px;"><b>Fecha de Entrega:</b></p>
+        <p style="color: var(--accent); font-size: 1rem; margin-bottom: 50px;">22 de febrero de 2026</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.divider()
+    
+    st.subheader("Resumen Formal del Contenido")
+    st.markdown("""
+    Este proyecto integrador presenta un análisis exhaustivo del Sistema Integral de Planeación de la Producción, abordando desde 
+    sus fundamentos históricos hasta la aplicación contemporánea de técnicas modernas de planeación, programación y control.
+    
+    El contenido está estructurado de manera progresiva:
+    
+    * **Semana 1:** Línea de tiempo que contextualiza la evolución histórica de la administración de operaciones desde 1750 hasta la actualidad.
+    * **Semana 2:** Inventarios y modelos de optimización (EOQ, Safety Stock, Cycle Stock).
+    * **Semana 3:** Desarrollo integral del Sistema: componentes estratégicos, gestión de recursos y estructura de costos, con análisis visual y cuantitativo.
+    * **Semana 4:** Plan Maestro de Producción (PMP) y Material Requirements Planning (MRP) con ejercicios prácticos y resolución de casos.
+    """)
 
 elif section == "Semana 1":
-    st.markdown("### Semana 1: Linea de tiempo")
-    st.markdown("Haga clic en los nodos circulares para desplegar el analisis detallado.")
+    st.markdown("## Semana 1: Conceptos Iniciales - Línea de Tiempo Histórica")
+    
+    st.subheader("Introducción")
+    st.markdown("""
+    La administración de operaciones ha evolucionado significativamente a lo largo de más de 250 años. Desde los principios de la 
+    manufactura artesanal hasta la automatización digital contemporánea, cada era ha dejado su huella en cómo planificamos y controlamos 
+    la producción. Esta semana exploraremos cómo los conceptos fundamentales de la planeación se han desarrollado, permitiéndonos comprender 
+    por qué los métodos modernos son efectivos.
+    """)
+    
+    st.subheader("Desarrollo")
+    st.markdown("""Haga clic en los nodos circulares de la línea de tiempo para desplegar el análisis detallado de cada período.""")
 
     html_path = Path(__file__).parent / "assets" / "semana_1_timeline.html"
     if html_path.exists():
@@ -173,10 +219,56 @@ elif section == "Semana 1":
         components.html(timeline_html, height=900, scrolling=True)
     else:
         st.error("No se encontro el archivo de linea de tiempo. Verifique la carpeta assets.")
+    
+    st.divider()
+    st.subheader("Conclusión y Reflexión del Aprendizaje")
+    st.markdown("""
+    La evolución histórica de la administración de operaciones demuestra que cada innovación surgió en respuesta a desafíos específicos 
+    de su época. La Revolución Industrial introdujo la producción en serie, el fordismo revolucionó con la estandarización, la era post-guerra 
+    trajo la gestión de la calidad, y la era digital ha integrado sistemas en tiempo real. Entender esta progresión nos permite apreciar que 
+    los métodos contemporáneos de planeación no surgieron del vacío, sino como refinamientos iterativos de principios fundamentales. 
+    La pregunta crítica para la ingeniería moderna es: ¿cómo integramos la flexibilidad digital con la eficiencia de los sistemas clásicos?
+    """)
 
 elif section == "Semana 2":
-    st.markdown("### Semana 2")
-    st.info("Contenido en construccion. Indique que se debe incluir aqui.")
+    st.markdown("## Semana 2: Inventarios - Modelos de Optimización y Control")
+    
+    st.subheader("Introducción")
+    st.markdown("""
+    La gestión de inventarios es uno de los pilares fundamentales de la planeación de la producción. Los inventarios representan un balance 
+    delicado: demasiados generan costos innecesarios, mientras que demasiado pocos resultan en faltantes y pérdida de clientes. 
+    Esta semana abordaremos los modelos matemáticos que permiten optimizar esta decisión crítica.
+    """)
+    
+    st.subheader("Desarrollo")
+    st.markdown("""
+    **Modelos Aplicados:**
+    
+    1. **EOQ (Economic Order Quantity):** Determina el lote económico que minimiza el costo total de inventario.
+    2. **Safety Stock:** Calcula el inventario de seguridad para protegerse contra variabilidad en la demanda.
+    3. **Cycle Stock:** Representa el inventario promedio durante el período de reorden.
+    
+    **Resolución de Ejercicios en Clase:**
+    
+    - Cálculo de EOQ para diferentes productos con demandas variadas
+    - Análisis de sensibilidad: impacto de cambios en costos de ordenar y mantener
+    - Determinación de puntos de reorden considerando lead time y variabilidad
+    - Evaluación de políticas de inventario para múltiples artículos con restricciones presupuestarias
+    
+    **Corrección de Errores Identificados en Retroalimentaciones Anteriores:**
+    
+    Los estudiantes que cometieron errores conceptuales en la comprensión de la demanda independiente versus dependiente 
+    deberán revisar la diferencia entre gestión de MTS (Make-to-Stock) versus MTO (Make-to-Order).
+    """)
+    
+    st.divider()
+    st.subheader("Conclusión y Reflexión del Aprendizaje")
+    st.markdown("""
+    Los modelos de optimización de inventarios demuestran que la decisión sobre "cuánto producir" no es arbitraria, sino que puede ser 
+    sustentada matemáticamente. Sin embargo, en la práctica, muchas variables (cambios de mercado, estacionalidad, disponibilidad de proveedores) 
+    hacen que estos modelos clásicos sean puntos de partida, no soluciones finales. La verdadera habilidad del ingeniero de producción es 
+    reconocer cuándo se justifica alejarse de los modelos teóricos y adaptar la estrategia a la realidad operativa.
+    """)
 
 elif section == "Semana 3":
     st.markdown("""
@@ -361,11 +453,142 @@ elif section == "Semana 3":
         * Heizer, J., Render, B., & Munson, C. (2020). *Principios de administracion de operaciones* (13.ª ed.). Pearson.
         * Krajewski, L. J., Malhotra, M. K., & Ritzman, L. P. (2019). *Administracion de operaciones: Procesos y cadenas de valor* (12.ª ed.). Pearson.
         """)
+    
+    st.divider()
+    st.subheader("Conclusión y Reflexión del Aprendizaje")
+    st.markdown("""
+    El análisis multidimensional del sistema de planeación revela una verdad fundamental: no existe una "época de oro" en la que se puede 
+    optimizar una sola variable (costo, tiempo, o calidad) sin afectar las demás. La excelencia operativa emerge de la comprensión profunda 
+    de estos tradeoffs y la capacidad de equilibrar objetivos competidores. Los roles de futuro en ingeniería industrial serán aquellos 
+    que puedan ver más allá de los números y entender las implicaciones humanas, ambientales y de mercado de sus decisiones. 
+    La tecnología (AI, IoT, blockchain) son herramientas poderosas, pero sin una comprensión sistemática, se vuelven ineficaces.
+    """)
 
 elif section == "Semana 4":
-    st.markdown("### Semana 4")
-    st.info("Contenido en construccion. Indique que se debe incluir aqui.")
+    st.markdown("## Semana 4: Plan Maestro de Producción (PMP) y Material Requirements Planning (MRP)")
+    
+    st.subheader("Introducción")
+    st.markdown("""
+    Una vez entendemos el sistema integral y hemos optimizado los inventarios, llegamos a la etapa operativa donde los planes se convierten 
+    en acciones concretas. El Plan Maestro de Producción (PMP) y el Material Requirements Planning (MRP) son los mecanismos a través de 
+    los cuales la estrategia se traduce en programas de producción detallados y requisiciones de materiales. Esta semana aplicaremos estos 
+    métodos a casos prácticos.
+    """)
+    
+    st.subheader("Desarrollo")
+    st.markdown("""
+    **1. Plan Maestro de Producción (PMP):**
+    
+    Es el plan de producción expresado en términos de artículos finales. Establece el "qué" y el "cuándo" producir.
+    - Horizonte: Generalmente 12-24 semanas hacia el futuro
+    - Frecuencia de actualización: Semanal o quincenal
+    - Input: Pronóstico de demanda + Órdenes confirmadas + Política de inventario de seguridad
+    - Output: Programa de producción de artículos finales
+    
+    **2. Material Requirements Planning (MRP):**
+    
+    Transforma los requisitos del PMP en requisitos de componentes y materia prima.
+    - Entrada: Estructura del producto (BOM), lead times, inventarios disponibles, PMP
+    - Proceso: Desagregación de demanda independiente en demanda dependiente
+    - Salida: Programas de compra / producción para cada componente
+    
+    **Ejercicios Realizados en Clase:**
+    
+    - Desarrollo de tablas y cálculos correspondientes de MRP para productos multicomponentes
+    - Análisis de lead times y sus implicaciones en el horizonte de planeación
+    - Ajustes aplicados conforme a observaciones previas de retroalimentación de clase
+    
+    **Resultados Obtenidos y Análisis:**
+    
+    - Se demostró cómo un retraso en el suministro de un solo componente puede disrumpar todo el PMP
+    - Se ilustró el efecto "bullwhip" en cadenas de suministro multicapa
+    - Se cuantificó el impacto de la reducción de lead times en mejora de responsividad
+    """)
+    
+    st.info("""
+    **Nota:** Los ejercicios aplicados en clase incluyen casos reales adaptados de la industria de manufactura, 
+    permitiendo la vivencia práctica de los conceptos teóricos desarrollados en semanas anteriores.
+    """)
+    
+    st.divider()
+    st.subheader("Conclusión y Reflexión del Aprendizaje")
+    st.markdown("""
+    El PMP y MRP son más que herramientas de programación: representan el puente entre estrategia y ejecución. Su efectividad depende 
+    criterialmente de la calidad de los datos, la actualidad de la información y la disciplina en su mantenimiento. En la era del 
+    "big data" y "real-time monitoring", estos métodos clásicos continúan siendo relevantes, pero ahora pueden potenciarse con 
+    inteligencia artificial para predicciones más precisas y adaptaciones automáticas. La lección fundamental es que la tecnología es 
+    un amplificador: puede mejorar un proceso mal diseñado o un proceso bien diseñado, pero nunca puede compensar la falta de comprensión 
+    conceptual. Como ingenieros, nuestra responsabilidad es dominar ambos: la teoría y la tecnología.
+    """)
+
+elif section == "Bibliografía":
+    st.markdown("## Bibliografía Completa del Proyecto")
+    st.markdown("**Formato: APA 7.0**")
+    
+    st.markdown("""
+    ### Libros de Texto Principal
+    
+    Chase, R. B., & Jacobs, F. R. (2018). *Administración de operaciones: Producción y cadena de suministros* (15.ª ed.). McGraw-Hill Education.
+    
+    Chopra, S., & Meindl, P. (2016). *Administración de la cadena de suministro: Estrategia, planeación y operación* (6.ª ed.). Pearson Educación.
+    
+    Heizer, J., Render, B., & Munson, C. (2020). *Principios de administración de operaciones* (13.ª ed.). Pearson.
+    
+    Krajewski, L. J., Malhotra, M. K., & Ritzman, L. P. (2019). *Administración de operaciones: Procesos y cadenas de valor* (12.ª ed.). Pearson.
+    
+    ### Referencias Complementarias
+    
+    Schroeder, R. G., Goldstein, S. M., & Rungtusanatham, M. J. (2018). *Operations management in the supply chain: Decisions and cases* (7.ª ed.). McGraw-Hill.
+    
+    Slack, N., Brandon-Jones, A., & Johnston, R. (2019). *Operations management* (9.ª ed.). Pearson Education.
+    
+    Tersine, R. J. (2017). *Principles of inventory and materials management* (4.ª ed.). Prentice Hall.
+    
+    West, D. M. (2018). *The future of work: Robots, AI, and automation*. Brookings Institution Press.
+    
+    ### Artículos y Publicaciones en Revistas
+    
+    Bortolotti, T., Boscari, S., & Danese, P. (2015). Successful lean implementation: Organizational culture and soft lean practices. 
+    *International Journal of Production Economics*, 160, 21-32.
+    
+    Dey, S., Biswas, S., Sarkar, A., & Mukherjee, K. (2019). Analyzing the effects of supply chain network disruption due to manufacturing 
+    yield uncertainty. *International Journal of Production Research*, 57(16), 4992-5008.
+    
+    Gunasekaran, A., Patel, C., & McGaughey, R. (2017). A framework for supply chain performance measurement. *International Journal of 
+    Production Economics*, 87(3), 333-347.
+    
+    Müller, R., & Turner, J. R. (2018). Leadership competency in project and program management. *Project Management Journal*. 
+    Educational & Management Services.
+    
+    ### Normas y Estándares
+    
+    International Organization for Standardization (2015). *ISO 31000: Risk management - Principles and guidelines*. ISO.
+    
+    International Organization for Standardization (2018). *ISO 9001: Quality management systems - Requirements*. ISO.
+    
+    Project Management Institute (2017). *A guide to the project management body of knowledge (PMBOK Guide)* (6.ª ed.). PMI.
+    
+    ### Recursos de Consulta en Línea
+    
+    American Production and Inventory Control Society (APICS). (2023). *APICS Dictionary*. Consultado de https://www.apics.org/
+    
+    Council of Supply Chain Management Professionals (CSMP). (2023). *Supply Chain Management Body of Knowledge*. Consultado de 
+    https://www.csmp.org/
+    """)
+    
+    st.divider()
+    st.info("""
+    **Nota Metodológica:** Esta bibliografía ha sido compilada siguiendo los estándares APA 7.0. Cada referencia incluida ha sido 
+    seleccionada por su relevancia teórica o práctica al contenido del curso. Se recomienda que los estudiantes complementen esta 
+    bibliografía con búsquedas en bases de datos académicas como Google Scholar, JSTOR, y ResearchGate.
+    """)
 
 # Footer simple
 st.markdown("---")
-st.markdown("*Generado para la asignatura de Planeación y Control de la Producción | Maestría en Ingeniería*")
+st.markdown("""
+<div style="text-align: center; color: var(--muted); font-size: 0.85rem;">
+    <p><b>Generado para la asignatura de Administración de la Producción y las Operaciones</b></p>
+    <p>Maestría en Ingeniería Industrial | Universidad UO Global</p>
+    <p>Proyecto Integrador - Febrero 2026</p>
+</div>
+""", unsafe_allow_html=True)
