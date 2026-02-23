@@ -1,7 +1,9 @@
 import streamlit as st
-import graphviz
+import streamlit.components.v1 as components
 import plotly.graph_objects as go
 import pandas as pd
+import networkx as nx
+from pathlib import Path
 
 # -----------------------------------------------------------------------------
 # CONFIGURACIÓN DE PÁGINA Y ESTILO
@@ -64,61 +66,119 @@ with col_header_2:
 st.divider()
 
 # -----------------------------------------------------------------------------
-# 1. MAPA CONCEPTUAL (GRAPHVIZ)
+# 1. MAPA CONCEPTUAL INTERACTIVO (NETWORK GRAPH)
 # -----------------------------------------------------------------------------
-st.subheader("1. Mapa Conceptual Jerárquico del Sistema")
+st.subheader("1. Mapa Conceptual Jerárquico del Sistema 🔗")
 st.markdown("""
-Este diagrama representa la interconexión lógica entre los niveles de decisión. 
+Este diagrama **interactivo** representa la interconexión lógica entre los niveles de decisión. 
 Se observa cómo la estrategia *descendente* (Top-Down) condiciona los recursos y cómo los costos actúan como restricción de control.
+**Puede hacer clic y arrastrar los nodos para explorar las conexiones.**
 """)
 
-# Crear el grafo
-dot = graphviz.Digraph(comment='Sistema de Planeación')
-dot.attr(rankdir='TB', size='10')  # Top to Bottom
+# Crear grafo de red con NetworkX
+G = nx.DiGraph()
 
-# Nodos Principales
-dot.attr('node', shape='box', style='filled', fontname='Helvetica', fontcolor='white')
+# Definir nodos con jerarquía y colores
+nodes = {
+    'SISTEMA DE\nPLANEACIÓN': {'level': 0, 'color': '#2c3e50', 'size': 40},
+    'ELEMENTOS\nESTRATÉGICOS': {'level': 1, 'color': COLOR_PRIMARY, 'size': 30},
+    'GESTIÓN DE\nRECURSOS': {'level': 1, 'color': COLOR_SECONDARY, 'size': 30},
+    'COSTOS Y\nGASTOS': {'level': 1, 'color': COLOR_TERTIARY, 'size': 30},
+    'Planeación\nAgregada\n(6-18 meses)': {'level': 2, 'color': '#E8E8E8', 'size': 20},
+    'Estrategia de\nOperaciones': {'level': 2, 'color': '#E8E8E8', 'size': 20},
+    'Objetivos\nOrganizacionales\n(ROI, Share)': {'level': 2, 'color': '#E8E8E8', 'size': 20},
+    'Capacidad\n(Instalaciones)': {'level': 2, 'color': '#E8E8E8', 'size': 20},
+    'Mano de Obra\n(Fuerza Laboral)': {'level': 2, 'color': '#E8E8E8', 'size': 20},
+    'Materiales\n(MRP / BOM)': {'level': 2, 'color': '#E8E8E8', 'size': 20},
+    'Costos de\nInventario': {'level': 2, 'color': '#E8E8E8', 'size': 20},
+    'Costos de\nProducción': {'level': 2, 'color': '#E8E8E8', 'size': 20},
+    'Costos de\nFaltantes': {'level': 2, 'color': '#E8E8E8', 'size': 20}
+}
 
-# Nodo Central
-dot.node('CENTER', 'SISTEMA DE\nPLANEACIÓN', fillcolor='#2c3e50', fontsize='16')
+# Agregar nodos
+for node, attrs in nodes.items():
+    G.add_node(node, **attrs)
 
-# Ramas
-dot.node('EST', 'ELEMENTOS\nESTRATÉGICOS', fillcolor=COLOR_PRIMARY)
-dot.node('REC', 'GESTIÓN DE\nRECURSOS', fillcolor=COLOR_SECONDARY)
-dot.node('COS', 'COSTOS Y\nGASTOS', fillcolor=COLOR_TERTIARY)
+# Definir conexiones (edges)
+edges = [
+    ('SISTEMA DE\nPLANEACIÓN', 'ELEMENTOS\nESTRATÉGICOS', 'Base'),
+    ('SISTEMA DE\nPLANEACIÓN', 'GESTIÓN DE\nRECURSOS', 'Base'),
+    ('SISTEMA DE\nPLANEACIÓN', 'COSTOS Y\nGASTOS', 'Base'),
+    ('ELEMENTOS\nESTRATÉGICOS', 'Planeación\nAgregada\n(6-18 meses)', 'Nivel Táctico'),
+    ('ELEMENTOS\nESTRATÉGICOS', 'Estrategia de\nOperaciones', 'Ventaja Comp.'),
+    ('ELEMENTOS\nESTRATÉGICOS', 'Objetivos\nOrganizacionales\n(ROI, Share)', 'Metas'),
+    ('GESTIÓN DE\nRECURSOS', 'Capacidad\n(Instalaciones)', 'Restricciones'),
+    ('GESTIÓN DE\nRECURSOS', 'Mano de Obra\n(Fuerza Laboral)', 'Talento'),
+    ('GESTIÓN DE\nRECURSOS', 'Materiales\n(MRP / BOM)', 'Insumos'),
+    ('COSTOS Y\nGASTOS', 'Costos de\nInventario', 'Holding'),
+    ('COSTOS Y\nGASTOS', 'Costos de\nProducción', 'Operativos'),
+    ('COSTOS Y\nGASTOS', 'Costos de\nFaltantes', 'Riesgo')
+]
 
-# Hojas (Detalles) - Estilo diferente
-dot.attr('node', shape='ellipse', style='filled', fontcolor='black', fillcolor='white', color='black')
+for src, dst, label in edges:
+    G.add_edge(src, dst, label=label)
 
-# Estrategia
-dot.edge('CENTER', 'EST', penwidth='2')
-dot.edge('EST', 'PA', label='Nivel Táctico')
-dot.node('PA', 'Planeación\nAgregada\n(6-18 meses)')
-dot.edge('EST', 'EO', label='Ventaja Comp.')
-dot.node('EO', 'Estrategia de\nOperaciones')
-dot.edge('EST', 'OBJ', label='Metas')
-dot.node('OBJ', 'Objetivos\nOrganizacionales\n(ROI, Share)')
+# Layout jerárquico
+pos = nx.spring_layout(G, k=2, iterations=50, seed=42)
 
-# Recursos
-dot.edge('CENTER', 'REC', penwidth='2')
-dot.edge('REC', 'CAP', label='Restricciones')
-dot.node('CAP', 'Capacidad\n(Instalaciones)')
-dot.edge('REC', 'MO', label='Talento')
-dot.node('MO', 'Mano de Obra\n(Fuerza Laboral)')
-dot.edge('REC', 'MAT', label='Insumos')
-dot.node('MAT', 'Materiales\n(MRP / BOM)')
+# Crear trazas de Plotly
+edge_trace = []
+for edge in G.edges():
+    x0, y0 = pos[edge[0]]
+    x1, y1 = pos[edge[1]]
+    edge_trace.append(go.Scatter(
+        x=[x0, x1, None], y=[y0, y1, None],
+        mode='lines',
+        line=dict(width=2, color='#888'),
+        hoverinfo='none',
+        showlegend=False
+    ))
 
-# Costos
-dot.edge('CENTER', 'COS', penwidth='2')
-dot.edge('COS', 'CIN', label='Holding')
-dot.node('CIN', 'Costos de\nInventario')
-dot.edge('COS', 'CPR', label='Operativos')
-dot.node('CPR', 'Costos de\nProducción')
-dot.edge('COS', 'CFA', label='Riesgo')
-dot.node('CFA', 'Costos de\nFaltantes')
+# Nodos
+node_x = []
+node_y = []
+node_colors = []
+node_sizes = []
+node_text = []
 
-# Renderizar en Streamlit
-st.graphviz_chart(dot, use_container_width=True)
+for node in G.nodes():
+    x, y = pos[node]
+    node_x.append(x)
+    node_y.append(y)
+    node_colors.append(nodes[node]['color'])
+    node_sizes.append(nodes[node]['size'])
+    node_text.append(node)
+
+node_trace = go.Scatter(
+    x=node_x, y=node_y,
+    mode='markers+text',
+    text=node_text,
+    textposition="middle center",
+    textfont=dict(size=10, color='white', family='Arial Black'),
+    hoverinfo='text',
+    marker=dict(
+        size=node_sizes,
+        color=node_colors,
+        line=dict(width=2, color='white')
+    ),
+    showlegend=False
+)
+
+# Crear figura
+fig_network = go.Figure(data=edge_trace + [node_trace],
+                        layout=go.Layout(
+                            title='',
+                            showlegend=False,
+                            hovermode='closest',
+                            margin=dict(b=0, l=0, r=0, t=0),
+                            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                            yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                            plot_bgcolor='rgba(0,0,0,0)',
+                            paper_bgcolor='rgba(0,0,0,0)',
+                            height=600
+                        ))
+
+st.plotly_chart(fig_network, use_container_width=True)
 
 st.divider()
 
@@ -128,7 +188,23 @@ st.divider()
 st.subheader("2. Desglose Analítico y Visualización de Datos")
 st.markdown("Análisis profundo de los tres pilares fundamentales, sustentado en teoría de operaciones.")
 
-tab1, tab2, tab3 = st.tabs(["🟦 I. Elementos Estratégicos", "🟩 II. Gestión de Recursos", "🟥 III. Costos y Gastos"])
+tab0, tab1, tab2, tab3 = st.tabs([
+    "🟨 Semana 1 - Línea de Tiempo",
+    "🟦 I. Elementos Estratégicos",
+    "🟩 II. Gestión de Recursos",
+    "🟥 III. Costos y Gastos"
+])
+
+with tab0:
+    st.markdown("### Semana 1: Evolución de los Sistemas de Producción")
+    st.markdown("Haga clic en los nodos circulares para desplegar el análisis detallado.")
+
+    html_path = Path(__file__).parent / "assets" / "semana_1_timeline.html"
+    if html_path.exists():
+        timeline_html = html_path.read_text(encoding="utf-8", errors="ignore")
+        components.html(timeline_html, height=900, scrolling=True)
+    else:
+        st.error("No se encontró el archivo de línea de tiempo. Verifique la carpeta assets.")
 
 # --- TAB 1: ESTRATEGIA ---
 with tab1:
