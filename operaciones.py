@@ -2,7 +2,6 @@ import streamlit as st
 import streamlit.components.v1 as components
 import plotly.graph_objects as go
 import pandas as pd
-import networkx as nx
 from pathlib import Path
 
 # -----------------------------------------------------------------------------
@@ -66,119 +65,80 @@ with col_header_2:
 st.divider()
 
 # -----------------------------------------------------------------------------
-# 1. MAPA CONCEPTUAL INTERACTIVO (NETWORK GRAPH)
+# 1. MAPA CONCEPTUAL INTERACTIVO (SUNBURST)
 # -----------------------------------------------------------------------------
 st.subheader("1. Mapa Conceptual Jerárquico del Sistema 🔗")
 st.markdown("""
-Este diagrama **interactivo** representa la interconexión lógica entre los niveles de decisión. 
-Se observa cómo la estrategia *descendente* (Top-Down) condiciona los recursos y cómo los costos actúan como restricción de control.
-**Puede hacer clic y arrastrar los nodos para explorar las conexiones.**
+Este diagrama **interactivo** presenta la jerarquía del sistema en formato tipo pastel.
+Haga clic en cada sección para desplegar los niveles inferiores y explorar la relación entre decisiones.
 """)
 
-# Crear grafo de red con NetworkX
-G = nx.DiGraph()
-
-# Definir nodos con jerarquía y colores
-nodes = {
-    'SISTEMA DE\nPLANEACIÓN': {'level': 0, 'color': '#2c3e50', 'size': 40},
-    'ELEMENTOS\nESTRATÉGICOS': {'level': 1, 'color': COLOR_PRIMARY, 'size': 30},
-    'GESTIÓN DE\nRECURSOS': {'level': 1, 'color': COLOR_SECONDARY, 'size': 30},
-    'COSTOS Y\nGASTOS': {'level': 1, 'color': COLOR_TERTIARY, 'size': 30},
-    'Planeación\nAgregada\n(6-18 meses)': {'level': 2, 'color': '#E8E8E8', 'size': 20},
-    'Estrategia de\nOperaciones': {'level': 2, 'color': '#E8E8E8', 'size': 20},
-    'Objetivos\nOrganizacionales\n(ROI, Share)': {'level': 2, 'color': '#E8E8E8', 'size': 20},
-    'Capacidad\n(Instalaciones)': {'level': 2, 'color': '#E8E8E8', 'size': 20},
-    'Mano de Obra\n(Fuerza Laboral)': {'level': 2, 'color': '#E8E8E8', 'size': 20},
-    'Materiales\n(MRP / BOM)': {'level': 2, 'color': '#E8E8E8', 'size': 20},
-    'Costos de\nInventario': {'level': 2, 'color': '#E8E8E8', 'size': 20},
-    'Costos de\nProducción': {'level': 2, 'color': '#E8E8E8', 'size': 20},
-    'Costos de\nFaltantes': {'level': 2, 'color': '#E8E8E8', 'size': 20}
-}
-
-# Agregar nodos
-for node, attrs in nodes.items():
-    G.add_node(node, **attrs)
-
-# Definir conexiones (edges)
-edges = [
-    ('SISTEMA DE\nPLANEACIÓN', 'ELEMENTOS\nESTRATÉGICOS', 'Base'),
-    ('SISTEMA DE\nPLANEACIÓN', 'GESTIÓN DE\nRECURSOS', 'Base'),
-    ('SISTEMA DE\nPLANEACIÓN', 'COSTOS Y\nGASTOS', 'Base'),
-    ('ELEMENTOS\nESTRATÉGICOS', 'Planeación\nAgregada\n(6-18 meses)', 'Nivel Táctico'),
-    ('ELEMENTOS\nESTRATÉGICOS', 'Estrategia de\nOperaciones', 'Ventaja Comp.'),
-    ('ELEMENTOS\nESTRATÉGICOS', 'Objetivos\nOrganizacionales\n(ROI, Share)', 'Metas'),
-    ('GESTIÓN DE\nRECURSOS', 'Capacidad\n(Instalaciones)', 'Restricciones'),
-    ('GESTIÓN DE\nRECURSOS', 'Mano de Obra\n(Fuerza Laboral)', 'Talento'),
-    ('GESTIÓN DE\nRECURSOS', 'Materiales\n(MRP / BOM)', 'Insumos'),
-    ('COSTOS Y\nGASTOS', 'Costos de\nInventario', 'Holding'),
-    ('COSTOS Y\nGASTOS', 'Costos de\nProducción', 'Operativos'),
-    ('COSTOS Y\nGASTOS', 'Costos de\nFaltantes', 'Riesgo')
+labels = [
+    "SISTEMA DE PLANEACIÓN",
+    "ELEMENTOS ESTRATÉGICOS",
+    "GESTIÓN DE RECURSOS",
+    "COSTOS Y GASTOS",
+    "Planeación Agregada (6-18 meses)",
+    "Estrategia de Operaciones",
+    "Objetivos Organizacionales (ROI, Share)",
+    "Capacidad (Instalaciones)",
+    "Mano de Obra (Fuerza Laboral)",
+    "Materiales (MRP / BOM)",
+    "Costos de Inventario",
+    "Costos de Producción",
+    "Costos de Faltantes"
 ]
 
-for src, dst, label in edges:
-    G.add_edge(src, dst, label=label)
+parents = [
+    "",
+    "SISTEMA DE PLANEACIÓN",
+    "SISTEMA DE PLANEACIÓN",
+    "SISTEMA DE PLANEACIÓN",
+    "ELEMENTOS ESTRATÉGICOS",
+    "ELEMENTOS ESTRATÉGICOS",
+    "ELEMENTOS ESTRATÉGICOS",
+    "GESTIÓN DE RECURSOS",
+    "GESTIÓN DE RECURSOS",
+    "GESTIÓN DE RECURSOS",
+    "COSTOS Y GASTOS",
+    "COSTOS Y GASTOS",
+    "COSTOS Y GASTOS"
+]
 
-# Layout jerárquico
-pos = nx.spring_layout(G, k=2, iterations=50, seed=42)
+values = [100, 35, 35, 30, 12, 12, 11, 12, 12, 11, 10, 10, 10]
 
-# Crear trazas de Plotly
-edge_trace = []
-for edge in G.edges():
-    x0, y0 = pos[edge[0]]
-    x1, y1 = pos[edge[1]]
-    edge_trace.append(go.Scatter(
-        x=[x0, x1, None], y=[y0, y1, None],
-        mode='lines',
-        line=dict(width=2, color='#888'),
-        hoverinfo='none',
-        showlegend=False
-    ))
+colors = [
+    "#2c3e50",
+    COLOR_PRIMARY,
+    COLOR_SECONDARY,
+    COLOR_TERTIARY,
+    "#d6e6f2",
+    "#d6e6f2",
+    "#d6e6f2",
+    "#d9f2e3",
+    "#d9f2e3",
+    "#d9f2e3",
+    "#f5d6d6",
+    "#f5d6d6",
+    "#f5d6d6"
+]
 
-# Nodos
-node_x = []
-node_y = []
-node_colors = []
-node_sizes = []
-node_text = []
+fig_sunburst = go.Figure(go.Sunburst(
+    labels=labels,
+    parents=parents,
+    values=values,
+    branchvalues="total",
+    marker=dict(colors=colors, line=dict(color="#ffffff", width=2)),
+    insidetextorientation="radial",
+    hovertemplate="%{label}<extra></extra>"
+))
 
-for node in G.nodes():
-    x, y = pos[node]
-    node_x.append(x)
-    node_y.append(y)
-    node_colors.append(nodes[node]['color'])
-    node_sizes.append(nodes[node]['size'])
-    node_text.append(node)
-
-node_trace = go.Scatter(
-    x=node_x, y=node_y,
-    mode='markers+text',
-    text=node_text,
-    textposition="middle center",
-    textfont=dict(size=10, color='white', family='Arial Black'),
-    hoverinfo='text',
-    marker=dict(
-        size=node_sizes,
-        color=node_colors,
-        line=dict(width=2, color='white')
-    ),
-    showlegend=False
+fig_sunburst.update_layout(
+    margin=dict(t=10, l=10, r=10, b=10),
+    height=600
 )
 
-# Crear figura
-fig_network = go.Figure(data=edge_trace + [node_trace],
-                        layout=go.Layout(
-                            title='',
-                            showlegend=False,
-                            hovermode='closest',
-                            margin=dict(b=0, l=0, r=0, t=0),
-                            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                            yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                            plot_bgcolor='rgba(0,0,0,0)',
-                            paper_bgcolor='rgba(0,0,0,0)',
-                            height=600
-                        ))
-
-st.plotly_chart(fig_network, use_container_width=True)
+st.plotly_chart(fig_sunburst, use_container_width=True)
 
 st.divider()
 
