@@ -136,42 +136,49 @@ section = st.sidebar.radio(
 )
 
 if section == "Portada":
-    # Container principal de portada
-    st.markdown("""
-    <div style='padding: 20px 40px; background-color: rgba(15, 23, 42, 0.5); border-radius: 8px;'>
-        <div style='text-align: center; margin-bottom: 10px;'>
-            <p style='color: var(--gold); font-size: 1.3rem; font-weight: bold; margin: 0;'>UNIVERSIDAD UO GLOBAL</p>
-            <p style='color: var(--text); font-size: 0.95rem; margin: 5px 0 0 0;'>Maestria en Ingenieria Industrial</p>
-            <p style='color: var(--muted); font-size: 0.9rem; margin: 2px 0 0 0;'>Administracion de la Produccion y las Operaciones</p>
-        </div>
-        
-        <hr style='border: 1px solid var(--border); margin: 15px 0;'>
-        
-        <div style='text-align: center; margin-bottom: 10px;'>
-            <h1 style='color: var(--accent); font-size: 1.8rem; margin: 0 0 5px 0;'>PROYECTO INTEGRADOR</h1>
-            <p style='color: var(--text); font-size: 1rem; margin: 0;'>Sistema Integral de Planeacion de la Produccion</p>
-        </div>
-        
-        <hr style='border: 1px solid var(--border); margin: 15px 0;'>
-        
-        <div style='display: flex; justify-content: space-between; margin: 15px 0;'>
-            <div style='text-align: left; flex: 1;'>
-                <p style='color: var(--text); font-size: 0.9rem; font-weight: bold; margin: 0;'>Docente:</p>
-                <p style='color: var(--gold); font-size: 0.95rem; margin: 2px 0 0 0;'>Dra. Diana Faviola Olea Flores</p>
-            </div>
-            <div style='text-align: right; flex: 1;'>
-                <p style='color: var(--text); font-size: 0.9rem; font-weight: bold; margin: 0;'>Autor:</p>
-                <p style='color: var(--gold); font-size: 0.95rem; margin: 2px 0 0 0;'>Ing. Jaime Silva Betancourt</p>
-                <p style='color: var(--muted); font-size: 0.85rem; margin: 2px 0 0 0;'>Matricula: 42500289</p>
-            </div>
-        </div>
-        
-        <div style='text-align: center; margin: 15px 0 0 0;'>
-            <p style='color: var(--text); font-size: 0.9rem; font-weight: bold; margin: 0;'>Fecha de Entrega:</p>
-            <p style='color: var(--accent); font-size: 0.95rem; margin: 2px 0 0 0;'>22 de febrero de 2026</p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    # Container principal de portada - sin caracteres especiales en HTML
+    container_html = "<div style='padding: 20px 40px; background-color: rgba(15, 23, 42, 0.5); border-radius: 8px;'>"
+    
+    # Universidad
+    container_html += "<div style='text-align: center; margin-bottom: 10px;'>"
+    container_html += "<p style='color: var(--gold); font-size: 1.3rem; font-weight: bold; margin: 0;'>UNIVERSIDAD UO GLOBAL</p>"
+    container_html += "<p style='color: var(--text); font-size: 0.95rem; margin: 5px 0 0 0;'>Maestria en Ingenieria Industrial</p>"
+    container_html += "<p style='color: var(--muted); font-size: 0.9rem; margin: 2px 0 0 0;'>Administracion de la Produccion y las Operaciones</p>"
+    container_html += "</div>"
+    
+    # Separator
+    container_html += "<hr style='border: 1px solid var(--border); margin: 15px 0;'>"
+    
+    # Titulo
+    container_html += "<div style='text-align: center; margin-bottom: 10px;'>"
+    container_html += "<h1 style='color: var(--accent); font-size: 1.8rem; margin: 0 0 5px 0;'>PROYECTO INTEGRADOR</h1>"
+    container_html += "<p style='color: var(--text); font-size: 1rem; margin: 0;'>Sistema Integral de Planeacion de la Produccion</p>"
+    container_html += "</div>"
+    
+    # Separator
+    container_html += "<hr style='border: 1px solid var(--border); margin: 15px 0;'>"
+    
+    # Docente y Autor
+    container_html += "<div style='display: flex; justify-content: space-between; margin: 15px 0;'>"
+    container_html += "<div style='text-align: left; flex: 1;'>"
+    container_html += "<p style='color: var(--text); font-size: 0.9rem; font-weight: bold; margin: 0;'>Docente:</p>"
+    container_html += "<p style='color: var(--gold); font-size: 0.95rem; margin: 2px 0 0 0;'>Dra. Diana Faviola Olea Flores</p>"
+    container_html += "</div>"
+    container_html += "<div style='text-align: right; flex: 1;'>"
+    container_html += "<p style='color: var(--text); font-size: 0.9rem; font-weight: bold; margin: 0;'>Autor:</p>"
+    container_html += "<p style='color: var(--gold); font-size: 0.95rem; margin: 2px 0 0 0;'>Ing. Jaime Silva Betancourt</p>"
+    container_html += "<p style='color: var(--muted); font-size: 0.85rem; margin: 2px 0 0 0;'>Matricula: 42500289</p>"
+    container_html += "</div>"
+    container_html += "</div>"
+    
+    # Fecha
+    container_html += "<div style='text-align: center; margin: 15px 0 0 0;'>"
+    container_html += "<p style='color: var(--text); font-size: 0.9rem; font-weight: bold; margin: 0;'>Fecha de Entrega:</p>"
+    container_html += "<p style='color: var(--accent); font-size: 0.95rem; margin: 2px 0 0 0;'>22 de febrero de 2026</p>"
+    container_html += "</div>"
+    container_html += "</div>"
+    
+    st.markdown(container_html, unsafe_allow_html=True)
     
     st.markdown("")
     
