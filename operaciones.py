@@ -126,25 +126,6 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# ENCABEZADO ACADÉMICO
-# -----------------------------------------------------------------------------
-col_header_1, col_header_2 = st.columns([3, 1])
-with col_header_1:
-    st.title("SISTEMA INTEGRAL DE PLANEACIÓN DE LA PRODUCCIÓN")
-    st.markdown('<span class="subtitle-accent">Enfoque Sistémico: Estrategia, Recursos y Costos</span>', unsafe_allow_html=True)
-
-with col_header_2:
-    st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown(
-        '<div class="author-card">'
-        '<div class="author-tag">Autor:<br>Ing. Jaime Silva Betancourt</div>'
-        '<div class="author-subtitle">Maestría en Ingeniería Industrial</div>'
-        '</div>',
-        unsafe_allow_html=True
-    )
-
-st.divider()
-# -----------------------------------------------------------------------------
 # MENÚ LATERAL
 # -----------------------------------------------------------------------------
 st.sidebar.title("Menu")
@@ -271,6 +252,24 @@ elif section == "Semana 2":
     """)
 
 elif section == "Semana 3":
+    # ENCABEZADO ESPECÍFICO PARA SEMANA 3
+    col_header_1, col_header_2 = st.columns([3, 1])
+    with col_header_1:
+        st.title("SISTEMA INTEGRAL DE PLANEACIÓN DE LA PRODUCCIÓN")
+        st.markdown('<span class="subtitle-accent">Enfoque Sistémico: Estrategia, Recursos y Costos</span>', unsafe_allow_html=True)
+    
+    with col_header_2:
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown(
+            '<div class="author-card">'
+            '<div class="author-tag">Autor:<br>Ing. Jaime Silva Betancourt</div>'
+            '<div class="author-subtitle">Maestría en Ingeniería Industrial</div>'
+            '</div>',
+            unsafe_allow_html=True
+        )
+    
+    st.divider()
+    
     st.markdown("""
     ### Objetivo de la actividad
     Elabora un esquema o mapa conceptual (o mapa mental) en el que representes el Sistema de Planeacion de la Produccion, destacando de manera clara principales elementos que se debe considerar:
