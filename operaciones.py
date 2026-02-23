@@ -54,12 +54,33 @@ st.markdown(f"""
         color: var(--text) !important;
     }}
 
-    .author-tag {{
-        font-size: 1.1rem;
-        color: var(--muted);
+    .author-card {
+        background: linear-gradient(180deg, #0f1b33 0%, #0b1528 100%);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px 14px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .author-tag {
+        font-size: 1.05rem;
+        color: var(--gold);
         font-weight: bold;
         text-align: right;
-    }}
+        letter-spacing: 0.2px;
+    }
+
+    .author-subtitle {
+        color: #9cc5ff;
+        font-size: 0.95rem;
+        text-align: right;
+        margin-top: 6px;
+    }
+
+    .subtitle-accent {
+        color: #9cc5ff;
+        font-weight: 600;
+    }
 
     .citation {{
         font-size: 0.8rem;
@@ -110,12 +131,17 @@ st.markdown(f"""
 col_header_1, col_header_2 = st.columns([3, 1])
 with col_header_1:
     st.title("SISTEMA INTEGRAL DE PLANEACIÓN DE LA PRODUCCIÓN")
-    st.markdown("**Enfoque Sistémico: Estrategia, Recursos y Costos**")
+    st.markdown('<span class="subtitle-accent">Enfoque Sistémico: Estrategia, Recursos y Costos</span>', unsafe_allow_html=True)
 
 with col_header_2:
     st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown('<div class="author-tag">Autor:<br>Ing. Jaime Silva Betancourt</div>', unsafe_allow_html=True)
-    st.markdown('<div style="text-align: right;">Maestría en Ingeniería Industrial</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="author-card">'
+        '<div class="author-tag">Autor:<br>Ing. Jaime Silva Betancourt</div>'
+        '<div class="author-subtitle">Maestría en Ingeniería Industrial</div>'
+        '</div>',
+        unsafe_allow_html=True
+    )
 
 st.divider()
 
