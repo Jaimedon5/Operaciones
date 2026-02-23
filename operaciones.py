@@ -129,41 +129,47 @@ Haga clic en cada sección para desplegar los niveles inferiores y explorar la r
 """)
 
 labels = [
-    "ELEMENTOS ESTRATÉGICOS",
-    "GESTIÓN DE RECURSOS",
+    "SISTEMA DE PLANEACION DE LA PRODUCCION",
+    "ELEMENTOS ESTRATEGICOS",
+    "GESTION DE RECURSOS",
     "COSTOS Y GASTOS",
-    "Planeación Agregada (6-18 meses)",
+    "Planeacion Agregada (6-18 meses)",
+    "Programa Maestro (MPS)",
     "Estrategia de Operaciones",
     "Objetivos Organizacionales (ROI, Share)",
     "Capacidad (Instalaciones)",
     "Mano de Obra (Fuerza Laboral)",
     "Materiales (MRP / BOM)",
     "Costos de Inventario",
-    "Costos de Producción",
+    "Costos de Produccion",
     "Costos de Faltantes"
 ]
 
 parents = [
     "",
-    "",
-    "",
-    "ELEMENTOS ESTRATÉGICOS",
-    "ELEMENTOS ESTRATÉGICOS",
-    "ELEMENTOS ESTRATÉGICOS",
-    "GESTIÓN DE RECURSOS",
-    "GESTIÓN DE RECURSOS",
-    "GESTIÓN DE RECURSOS",
+    "SISTEMA DE PLANEACION DE LA PRODUCCION",
+    "SISTEMA DE PLANEACION DE LA PRODUCCION",
+    "SISTEMA DE PLANEACION DE LA PRODUCCION",
+    "ELEMENTOS ESTRATEGICOS",
+    "ELEMENTOS ESTRATEGICOS",
+    "ELEMENTOS ESTRATEGICOS",
+    "ELEMENTOS ESTRATEGICOS",
+    "GESTION DE RECURSOS",
+    "GESTION DE RECURSOS",
+    "GESTION DE RECURSOS",
     "COSTOS Y GASTOS",
     "COSTOS Y GASTOS",
     "COSTOS Y GASTOS"
 ]
 
-values = [35, 35, 30, 12, 12, 11, 12, 12, 11, 10, 10, 10]
+values = [100, 35, 35, 30, 10, 8, 9, 8, 12, 12, 11, 10, 10, 10]
 
 colors = [
+    "#2c3e50",
     COLOR_PRIMARY,
     COLOR_SECONDARY,
     COLOR_TERTIARY,
+    "#d6e6f2",
     "#d6e6f2",
     "#d6e6f2",
     "#d6e6f2",
@@ -183,7 +189,7 @@ fig_sunburst = go.Figure(go.Sunburst(
     marker=dict(colors=colors, line=dict(color="#ffffff", width=2)),
     insidetextorientation="radial",
     hovertemplate="%{label}<extra></extra>",
-    maxdepth=1
+    maxdepth=2
 ))
 
 fig_sunburst.update_layout(
