@@ -638,8 +638,7 @@ elif section == "Bibliografía":
     st.divider()
     st.info("""
     **Nota Metodológica:** Esta bibliografía ha sido compilada siguiendo los estándares APA 7.0. Cada referencia incluida ha sido 
-    seleccionada por su relevancia teórica o práctica al contenido del curso. Se recomienda que los estudiantes complementen esta 
-    bibliografía con búsquedas en bases de datos académicas como Google Scholar, JSTOR, y ResearchGate.
+    seleccionada por su relevancia teórica o práctica al contenido del curso.
     """)
 
 # Footer simple
