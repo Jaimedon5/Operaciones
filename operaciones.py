@@ -131,7 +131,8 @@ fig_sunburst = go.Figure(go.Sunburst(
     marker=dict(colors=colors, line=dict(color="#ffffff", width=2)),
     insidetextorientation="radial",
     hovertemplate="%{label}<extra></extra>",
-    maxdepth=1
+    maxdepth=1,
+    root=dict(visible=False)
 ))
 
 fig_sunburst.update_layout(
