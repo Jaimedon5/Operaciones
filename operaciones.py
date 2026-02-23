@@ -74,7 +74,6 @@ Haga clic en cada sección para desplegar los niveles inferiores y explorar la r
 """)
 
 labels = [
-    "SISTEMA DE PLANEACIÓN",
     "ELEMENTOS ESTRATÉGICOS",
     "GESTIÓN DE RECURSOS",
     "COSTOS Y GASTOS",
@@ -91,9 +90,8 @@ labels = [
 
 parents = [
     "",
-    "SISTEMA DE PLANEACIÓN",
-    "SISTEMA DE PLANEACIÓN",
-    "SISTEMA DE PLANEACIÓN",
+    "",
+    "",
     "ELEMENTOS ESTRATÉGICOS",
     "ELEMENTOS ESTRATÉGICOS",
     "ELEMENTOS ESTRATÉGICOS",
@@ -105,10 +103,9 @@ parents = [
     "COSTOS Y GASTOS"
 ]
 
-values = [100, 35, 35, 30, 12, 12, 11, 12, 12, 11, 10, 10, 10]
+values = [35, 35, 30, 12, 12, 11, 12, 12, 11, 10, 10, 10]
 
 colors = [
-    "#2c3e50",
     COLOR_PRIMARY,
     COLOR_SECONDARY,
     COLOR_TERTIARY,
@@ -131,8 +128,7 @@ fig_sunburst = go.Figure(go.Sunburst(
     marker=dict(colors=colors, line=dict(color="#ffffff", width=2)),
     insidetextorientation="radial",
     hovertemplate="%{label}<extra></extra>",
-    maxdepth=1,
-    root=dict(visible=False)
+    maxdepth=1
 ))
 
 fig_sunburst.update_layout(
